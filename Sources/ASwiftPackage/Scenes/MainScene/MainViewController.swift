@@ -18,6 +18,8 @@ public class MainViewController: UIViewController {
         return label
     }()
     
+    
+    
     public init() {
         super.init(nibName: nil, bundle: nil)
     }
@@ -34,6 +36,23 @@ public class MainViewController: UIViewController {
             label.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             label.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
         ])
+        
+        let coreDataStack = CoreDataStack()
+        let dataStore = CDEntityCoreDataStore(coreDataStack: coreDataStack)
+        
+        dataStore.changeObserver = { [weak dataStore, weak self] in
+            do {
+                let entities = try dataStore?.fetchCDEntities()
+                self?.label.text = entities?.first?.test
+            } catch {
+                
+            }
+        }
+        
+        let cdEntity = dataStore.createCDEntity()
+        cdEntity.test = "Core Data test"
+        dataStore.saveCDEntity(cdEntity)
+
     }
     
 }

@@ -20,10 +20,9 @@ public class CoreDataStack {
     let modelName: String
     let bundle: Bundle
     
-    public init(modelName: String = "ASPDataModel",
-                in bundle: Bundle = Bundle(for: CoreDataStack.self)) {
+    public init(modelName: String = "ASPDataModel") {
         self.modelName = modelName
-        self.bundle = bundle
+        self.bundle = Bundle.module
     }
     
     private lazy var persistentContainer: NSPersistentContainer = {
